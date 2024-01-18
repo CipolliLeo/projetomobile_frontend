@@ -1,70 +1,74 @@
 import * as React from "react";
 import { Text, View } from "react-native";
-import { NavigationContainer } from "@react-navigation/native";
+import { NavigationContainer, useNavigation } from "@react-navigation/native";
+import Icon from "react-native-vector-icons/FontAwesome";
 import { createMaterialBottomTabNavigator } from "@react-navigation/material-bottom-tabs";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-function Feed() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Feed!</Text>
-    </View>
-  );
-}
-
-function Profile() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Profile!</Text>
-    </View>
-  );
-}
-
-function Notifications() {
-  return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Notifications!</Text>
-    </View>
-  );
-}
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Button } from "react-native-elements";
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import Perfil from "./Perfil";
+import Busca from "./Busca";
+import Produtos from "./Produtos";
+import Servicos from "./Servicos";
+import Cadastrar from "./Cadastrar";
 
 const Tab = createMaterialBottomTabNavigator();
 
 export default function Principal() {
   return (
     <Tab.Navigator
-      initialRouteName="Feed"
+      initialRouteName="Busca"
       activeColor="#e91e63"
       labelStyle={{ fontSize: 12 }}
       style={{ backgroundColor: "tomato" }}
     >
       <Tab.Screen
-        name="Feed"
-        component={Feed}
+        name="Busca"
+        component={Busca}
         options={{
-          tabBarLabel: "Home",
+          tabBarLabel: "Buscar",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="home" color={color} size={26} />
+            <FontAwesome5 name="search" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="Notifications"
-        component={Notifications}
+        name="Produtos"
+        component={Produtos}
         options={{
-          tabBarLabel: "Updates",
+          tabBarLabel: "Produtos",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="bell" color={color} size={26} />
+            <FontAwesome5 name="shopping-bag" color={color} size={26} />
           ),
         }}
       />
       <Tab.Screen
-        name="Profile"
-        component={Profile}
+        name="Cadastrar"
+        component={Cadastrar}
         options={{
-          tabBarLabel: "Profile",
+          tabBarLabel: "Cadastrar",
           tabBarIcon: ({ color }) => (
-            <MaterialCommunityIcons name="account" color={color} size={26} />
+            <FontAwesome5 name="plus" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Serviços"
+        component={Servicos}
+        options={{
+          tabBarLabel: "Serviços",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="tools" color={color} size={26} />
+          ),
+        }}
+      />
+      <Tab.Screen
+        name="Perfil"
+        component={Perfil}
+        options={{
+          tabBarLabel: "Perfil",
+          tabBarIcon: ({ color }) => (
+            <FontAwesome5 name="user-alt" color={color} size={26} />
           ),
         }}
       />
