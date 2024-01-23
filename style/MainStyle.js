@@ -32,6 +32,13 @@ const styles = StyleSheet.create({
     color: "#f00",
     fontSize: 12,
   },
+  cardInfo: {
+    width: 350,
+    height: 120,
+    marginBottom: 5,
+    marginTop: 10,
+    marginLeft: 10,
+  },
 });
 
 export default styles;

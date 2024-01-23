@@ -2,12 +2,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import axios from "axios";
 import Config from "../util/Config";
 
-class ServicoService {
+class ProdutoService {
   async cadastrar(data) {
     let token = await AsyncStorage.getItem("TOKEN");
     console.log(data);
     return axios({
-      url: Config.API_URL + "servico/cadastrar",
+      url: Config.API_URL + "produto/cadastrar",
       method: "POST",
       timeout: Config.TIMEOUT_REQUEST,
       data: data,
@@ -29,7 +29,7 @@ class ServicoService {
   async listar() {
     let token = await AsyncStorage.getItem("TOKEN");
     return axios({
-      url: Config.API_URL + "servico/listar",
+      url: Config.API_URL + "produto/listar",
       method: "GET",
       timeout: Config.TIMEOUT_REQUEST,
       headers: {
@@ -69,5 +69,5 @@ class ServicoService {
   }
 }
 
-const servicoService = new ServicoService();
-export default servicoService;
+const produtoService = new ProdutoService();
+export default produtoService;

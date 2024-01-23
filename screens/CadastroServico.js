@@ -7,25 +7,82 @@ import { ScrollView } from "react-native-gesture-handler";
 import Icon from "react-native-vector-icons/FontAwesome";
 import servicoService from "../services/ServicoService";
 import styles from "../style/MainStyle";
+import DropDownPicker from "react-native-dropdown-picker";
 export default function CadastrarServico() {
   const [titulo, setTitulo] = useState(null);
   const [descricao, setDescricao] = useState(null);
+  const [valor, setValor] = useState(null);
   const [errorTitulo, setErrorTitulo] = useState(null);
   const [errorDescricao, setErrorDescricao] = useState(null);
+  const [errorDropdown, setErrorDropdown] = useState(null);
+  const [errorValor, setErrorValor] = useState(null);
   const [isLoading, setLoading] = useState(false);
+  const [open, setOpen] = useState(false);
+  const [estado, setEstado] = useState(null);
+  const [estados, setEstados] = useState([
+    { label: "AC", value: "Acre" },
+    { label: "AL", value: "Alagoas" },
+    { label: "AP", value: "Amapá" },
+    { label: "AM", value: "Amazonas" },
+    { label: "BA", value: "Bahia" },
+    { label: "CE", value: "Ceara" },
+    { label: "DF", value: "Distrito Federal" },
+    { label: "ES", value: "Espírito Santo" },
+    { label: "GO", value: "Goiás" },
+    { label: "MA", value: "Maranhão" },
+    { label: "MT", value: "Mato Grosso" },
+    { label: "MS", value: "Mato Grosso do Sul" },
+    { label: "MG", value: "Minas Gerais" },
+    { label: "PA", value: "Pará" },
+    { label: "PB", value: "Paraíba" },
+    { label: "PR", value: "Paraná" },
+    { label: "PE", value: "Pernambuco" },
+    { label: "PI", value: "Piauí" },
+    { label: "RJ", value: "Rio de Janeiro" },
+    { label: "RN", value: "Rio Grande do Norte" },
+    { label: "RS", value: "Rio Grande do Sul" },
+    { label: "RO", value: "Rondônia" },
+    { label: "RR", value: "Roraima" },
+    { label: "SC", value: "Santa Catarina" },
+    { label: "SP", value: "São Paulo" },
+    { label: "SE", value: "Sergipe" },
+    { label: "TO", value: "Tocantins" },
+  ]);
 
   const validar = () => {
     let error = false;
     setErrorTitulo(null);
     setErrorDescricao(null);
+    setErrorDropdown(null);
+    setErrorValor(null);
 
-    if (titulo.length < 5) {
+    if (titulo != null) {
+      if (titulo.length < 5) {
+        setErrorTitulo("Digite pelo menos 5 letras no título");
+        error = true;
+      }
+    } else {
       setErrorTitulo("Digite pelo menos 5 letras no título");
       error = true;
     }
-    if (descricao.length < 20) {
+
+    if (descricao != null) {
+      if (descricao.length < 20) {
+        setErrorDescricao("Digite pelo menos 20 letras na descrição");
+        error = true;
+      }
+    } else {
       setErrorDescricao("Digite pelo menos 20 letras na descrição");
       error = true;
+    }
+    console.log(estado);
+    if (estado == null) {
+      setErrorDropdown("Selecione o Estado de atuação");
+      error = true;
+    }
+
+    if (!valor) {
+      setErrorValor("Digite um valor");
     }
 
     return !error;
@@ -38,6 +95,8 @@ export default function CadastrarServico() {
       let data = {
         titulo: titulo,
         descricao: descricao,
+        valor: valor,
+        estado: estado,
       };
       console.log(data);
       servicoService
@@ -81,6 +140,24 @@ export default function CadastrarServico() {
           }}
           errorMessage={errorDescricao}
         />
+
+        <Input
+          placeholder="Valor do produto"
+          onChangeText={(value) => setValor(value)}
+          errorMessage={errorValor}
+          keyboardType="number-pad"
+        />
+
+        <DropDownPicker
+          placeholder="Selecione o estado de atuação"
+          open={open}
+          value={estado}
+          items={estados}
+          setOpen={setOpen}
+          setValue={setEstado}
+          setItems={setEstados}
+        />
+        <Text style={styles.errorMessage}>{errorDropdown}</Text>
 
         {isLoading && <Text>Carregando...</Text>}
 
